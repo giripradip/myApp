@@ -10,6 +10,7 @@ import { NewContact } from '../../helper/create-contact';
 export class TabPage {
 
     contactRoot = 'ContactPage'
+    contactSelectRoot = 'ContactSelectSearchablePage'
     aboutRoot = 'AboutPage'
 
     public title: string = "All Contacts";
