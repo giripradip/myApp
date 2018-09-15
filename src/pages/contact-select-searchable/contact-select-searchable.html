@@ -5,7 +5,7 @@
 <ion-content padding>
     <ion-item>
         <ion-label>Select Contact </ion-label>
-        <select-searchable item-content [(ngModel)]="selectedContact" [items]="contacts" itemValueField="id" itemTextField="first_name"
+        <select-searchable item-content [(ngModel)]="selectedContact" [items]="contacts" itemValueField="id" itemTextField="name"
             [canSearch]="true" (onChange)="contactSelected($event)">
         </select-searchable>
     </ion-item>

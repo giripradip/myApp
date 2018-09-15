@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events, LoadingController } from 'ionic-angular';
 import { HttpErrorResponse } from '@angular/common/http';
 import { SelectSearchableComponent } from 'ionic-select-searchable';
+import * as _ from "lodash";
 
 import { MyAppApiProvider } from '../../providers/my-app-api/my-app-api';
 import { Contact } from '../../helper/contact';
@@ -39,6 +40,9 @@ export class ContactSelectSearchablePage {
         this.apiProvider.getContacts(10, 1).subscribe(contact => {
             this.contact = contact;
             this.contacts = this.contact.data;
+            this.contacts = _.map(this.contacts, function (element) {
+                return _.extend({}, element, { name: element.first_name + " " + element.last_name });
+            });
             loader.dismiss();
         },
             (err: HttpErrorResponse) => {

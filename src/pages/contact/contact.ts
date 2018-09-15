@@ -22,6 +22,7 @@ export class ContactPage {
     public contacts: User[] = [];
     public queryText: string;
     public newContact: NewContact;
+    
 
     constructor(
         public navCtrl: NavController,
