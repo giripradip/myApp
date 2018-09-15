@@ -1,0 +1,25 @@
+<ion-header>
+    <ion-navbar color="primary">
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title> {{ title }} </ion-title>
+    </ion-navbar>
+</ion-header>
+
+<!-- <ion-header>
+    <ion-navbar color="primary">
+        <ion-title>Tab Home Page </ion-title>
+        <ion-buttons end>
+            <button ion-button icon-oly (click)="goHome($event)">
+                <ion-icon name="home"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header> -->
+
+
+<ion-tabs>
+    <ion-tab [root]="contactRoot" [rootParams]="contact" tabTitle="Contact" tabIcon="contacts"></ion-tab>
+    <ion-tab [root]="aboutRoot" [rootParams]="contact" tabTitle="About" tabIcon="information-circle"></ion-tab>
+</ion-tabs>
