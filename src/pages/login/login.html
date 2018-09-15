@@ -1,13 +1,28 @@
 <ion-header>
-  <ion-navbar color="primary">
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title> Login </ion-title>
-  </ion-navbar>
+    <ion-navbar color="primary">
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title> Login </ion-title>
+    </ion-navbar>
 </ion-header>
 
 
 <ion-content padding>
+    <ion-list>
+        <ion-row justify-content-center>
+            <ion-col align-self-center size-md="6" size-lg="5" size-xs="12">
+                <ion-item>
+                    <ion-input type="email" required [(ngModel)]="authenticationCredential.email" placeholder="Email"></ion-input>
+                </ion-item>
 
+                <ion-item>
+                    <ion-input type="password" required [(ngModel)]="authenticationCredential.password" placeholder="Password"></ion-input>
+                </ion-item>
+                <div padding>
+                    <button ion-button color="primary" block (click)= "login()">Login</button>
+                </div>
+            </ion-col>
+        </ion-row>
+    </ion-list>
 </ion-content>

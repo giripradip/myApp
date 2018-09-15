@@ -1,0 +1,25 @@
+<ion-header>
+    <ion-navbar color="primary">
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Logout</ion-title>
+    </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+    <ion-card>
+        <ion-card-header>
+            Logout
+        </ion-card-header>
+        <ion-card-content>
+            Click logout button below to logout from the app. 
+            While logging in again you can use any email or password.
+            Thank you!
+        </ion-card-content>
+        <div padding>
+            <button ion-button color="danger" block (click)="logout()">Logout</button>
+        </div>
+    </ion-card>
+</ion-content>
