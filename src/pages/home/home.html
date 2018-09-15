@@ -1,13 +1,48 @@
 <ion-header>
-  <ion-navbar color="primary">
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Home</ion-title>
-  </ion-navbar>
+    <ion-navbar color="primary">
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Home</ion-title>
+    </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <h3>Welcome to myApp </h3>
-  <button ion-button (click) = "goToContactDetail()"> Contact Details </button>
+<ion-content>
+    <h3 padding> Welcome to myApp {{ user?.first_name }} !! </h3>
+    <ion-card *ngIf="isLoggedIn && user">
+        <ion-item>
+            <ion-avatar item-start>
+                <img src="{{ user.avatar }}">
+            </ion-avatar>
+            <h2>{{ user.first_name + " " + user.last_name}} </h2>
+            <h3 *ngIf="nickName"> {{ nickName }}</h3>
+            <p> November 5, 1955 </p>
+        </ion-item>
+        <img src="{{ user.avatar }}">
+        <ion-card-content>
+            <p>Wait a minute. Wait a minute, Doc. Uhhh... Are you telling me that you built a time machine... out of a
+                DeLorean?!
+                Whoa. This is heavy.</p>
+        </ion-card-content>
+        <ion-row>
+        </ion-row>
+    </ion-card>
+    <div *ngIf="isLoggedIn && user" padding>
+        <button ion-button (click)="goToContactsPage()"> Show All Contacts </button>
+    </div>
+
+    <ion-card *ngIf="!isLoggedIn">
+        <ion-row justify-content-center>
+            <ion-card-content>
+                <p> You are not logged in to my system. To use the full feature of this app please login to my system
+                    by
+                    providing valid email and password of your own choice. Please click Go to Login button to go to the
+                    Login page or slide the menu to see the Login in menu.</p>
+            </ion-card-content>
+            <div padding>
+                <button ion-button color="primary" block (click)="goToLoginPage()"> Go to Login </button>
+            </div>
+        </ion-row>
+    </ion-card>
+
 </ion-content>
