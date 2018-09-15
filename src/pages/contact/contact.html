@@ -1,0 +1,22 @@
+<ion-header>
+    <ion-navbar> </ion-navbar>
+    <ion-toolbar>
+        <ion-searchbar placeholder="Search contact" [(ngModel)]="queryText">
+        </ion-searchbar>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-list *ngIf="contacts && contacts.length">
+        <ion-list-header>
+            Contacts
+        </ion-list-header>
+        <button ion-item *ngFor="let contact of contacts | contactFilter: queryText" (click)="contactSelected($event, contact)">
+            <ion-avatar item-start>
+                <img src="{{ contact.avatar }}">
+            </ion-avatar>
+            <h2> {{ contact.first_name + " " + contact.last_name }} </h2>
+            <p> Id: {{ contact.id }} </p>
+        </button>
+    </ion-list>
+</ion-content>
