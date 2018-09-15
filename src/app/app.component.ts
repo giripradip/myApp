@@ -1,48 +1,69 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import { Nav, Platform, Events } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { HomePage } from '../pages/home/home';
 import { CustomNamePage } from '../pages/custom-name/custom-name';
-import { RegisterPage } from '../pages/register/register';
 import { LoginPage } from '../pages/login/login';
+import { MyAppApiProvider } from '../providers/my-app-api/my-app-api';
+import { LogoutPage } from '../pages/logout/logout';
+import { Constant } from '../helper/constant';
+import { CreateContactPage } from '../pages/create-contact/create-contact';
+import { TabPage } from '../pages/tab/tab';
 
 @Component({
-  templateUrl: 'app.html'
+    templateUrl: 'app.html'
 })
 export class MyApp {
-  @ViewChild(Nav) nav: Nav;
+    @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = HomePage;
+    rootPage: any = HomePage;
 
-  pages: Array<{title: string, component: any}>;
+    pages: Array<{ title: string, component: any }>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
-    this.initializeApp();
+    constructor(
+        public platform: Platform,
+        public statusBar: StatusBar,
+        public splashScreen: SplashScreen,
+        public apiProvider: MyAppApiProvider,
+        public events: Events) {
+        this.initializeApp();
+        this.setPage();
+    }
 
-    // used for an example of ngFor and navigation
-    this.pages = [
-      { title: 'Home', component: HomePage },
-      { title: 'Login', component: LoginPage },
-      { title: 'Register', component: RegisterPage },
-      { title: 'Create Nick Name', component: CustomNamePage },
-    ];
+    initializeApp() {
+        this.platform.ready().then(() => {
+            // Okay, so the platform is ready and our plugins are available.
+            // Here you can do any higher level native things you might need.
+            this.statusBar.styleDefault();
+            this.splashScreen.hide();
+            this.events.subscribe(Constant.USER_EVENT, () => this.setPage());
+        });
+    }
 
-  }
+    openPage(page) {
+        // Reset the content nav to have just this page
+        // we wouldn't want the back button to show in this scenario
+        this.nav.setRoot(page.component);
+    }
 
-  initializeApp() {
-    this.platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
-    });
-  }
-
-  openPage(page) {
-    // Reset the content nav to have just this page
-    // we wouldn't want the back button to show in this scenario
-    this.nav.setRoot(page.component);
-  }
+    private setPage() {
+        this.pages = [{ title: 'Home', component: HomePage }];
+        this.apiProvider.isAuthenticated().then(
+            (val: string | null) => {
+                if (val !== null) {
+                    this.pages = this.pages.concat([
+                        { title: 'All Contacts', component: TabPage },
+                        { title: 'Create Nick Name', component: CustomNamePage },
+                        { title: 'Create Contact', component: CreateContactPage },
+                        { title: 'Logout', component: LogoutPage }
+                    ]);
+                    return;
+                }
+                this.pages = this.pages.concat([
+                    { title: 'Login', component: LoginPage },
+                ]);
+            });
+    }
 }
