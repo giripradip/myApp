@@ -1,10 +1,40 @@
 <ion-header>
     <ion-navbar color="primary">
-        <ion-title> Contact Details </ion-title>
+        <ion-title> {{ contact?.first_name }} </ion-title>
     </ion-navbar>
 </ion-header>
 
-
-<ion-content padding>
-
+<ion-content>
+    <ion-card>
+        <ion-card-header>
+            Details of: {{ contact?.first_name + " " + contact?.last_name}}
+        </ion-card-header>
+        <ion-item>
+            <ion-avatar item-start>
+                <img src="{{ contact?.avatar }}">
+            </ion-avatar>
+            <h2>{{ contact?.first_name + " " + contact?.last_name}} </h2>
+            <p> November 5, 1955 </p>
+        </ion-item>
+        <img src="{{ contact?.avatar }}">
+        <ion-card-content>
+            <p>Wait a minute. Wait a minute, Doc. Uhhh... Are you telling me that you built a time machine... out of a
+                DeLorean?!
+                Whoa. This is heavy.</p>
+        </ion-card-content>
+        <ion-row>
+            <ion-col>
+                <button ion-button icon-start clear small color="danger" (click)="deleteContact($event, contact)">
+                    <ion-icon name="trash"></ion-icon>
+                    <div>Delete</div>
+                </button>
+            </ion-col>
+            <ion-col>
+                <button ion-button icon-start clear small (click)="updateContact($event, contact)">
+                    <ion-icon name="create"></ion-icon>
+                    <div> Update </div>
+                </button>
+            </ion-col>
+        </ion-row>
+    </ion-card>
 </ion-content>

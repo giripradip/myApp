@@ -1,0 +1,34 @@
+<ion-header>
+    <ion-navbar color="primary">
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title> {{ btnLabel }} </ion-title>
+    </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+    <ion-list>
+        <ion-row justify-content-center>
+            <form [formGroup]="createContactForm" (ngSubmit)="createContact()">
+                <ion-item>
+                    <ion-label>First Name: </ion-label>
+                    <ion-input type="text" formControlName="firstName"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label>Last Name: </ion-label>
+                    <ion-textarea formControlName="lastName"></ion-textarea>
+                </ion-item>
+                <ion-item>
+                    <ion-label>Job: </ion-label>
+                    <ion-textarea formControlName="job"></ion-textarea>
+                </ion-item>
+                <div padding>
+                    <button ion-button type="submit" [disabled]="!createContactForm.valid" block> {{ btnLabel }} </button>
+                </div>
+
+            </form>
+        </ion-row>
+    </ion-list>
+</ion-content>
