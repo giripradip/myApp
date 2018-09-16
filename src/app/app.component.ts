@@ -5,12 +5,13 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { HomePage } from '../pages/home/home';
 import { CustomNamePage } from '../pages/custom-name/custom-name';
+import { AuthService } from '../providers/my-app-api/auth-service';
 import { LoginPage } from '../pages/login/login';
-import { MyAppApiProvider } from '../providers/my-app-api/my-app-api';
 import { LogoutPage } from '../pages/logout/logout';
 import { Constant } from '../helper/constant';
 import { CreateContactPage } from '../pages/create-contact/create-contact';
 import { TabPage } from '../pages/tab/tab';
+
 
 @Component({
     templateUrl: 'app.html'
@@ -26,7 +27,7 @@ export class MyApp {
         public platform: Platform,
         public statusBar: StatusBar,
         public splashScreen: SplashScreen,
-        public apiProvider: MyAppApiProvider,
+        public authService: AuthService,
         public events: Events) {
         this.initializeApp();
         this.setPage();
@@ -50,7 +51,7 @@ export class MyApp {
 
     private setPage() {
         this.pages = [{ title: 'Home', component: HomePage }];
-        this.apiProvider.isAuthenticated().then(
+        this.authService.isAuthenticated().then(
             (val: string | null) => {
                 if (val !== null) {
                     this.pages = this.pages.concat([

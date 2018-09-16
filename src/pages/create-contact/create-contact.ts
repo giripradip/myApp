@@ -4,7 +4,7 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 
 import { CreateContact } from '../../helper/create-contact';
-import { MyAppApiProvider } from '../../providers/my-app-api/my-app-api';
+import { ContactService } from '../../providers/my-app-api/contact-service';
 import { TabPage } from '../tab/tab';
 import { User } from '../../helper/user';
 import { Constant } from '../../helper/constant';
@@ -24,7 +24,7 @@ export class CreateContactPage {
         public navCtrl: NavController,
         public navParams: NavParams,
         public loadingController: LoadingController,
-        private apiProvider: MyAppApiProvider,
+        private contactService: ContactService,
         private formBuilder: FormBuilder) {
         this.contact = this.navParams.get(Constant.CONTACT);
         this.initializeCreateContactForm();
@@ -48,7 +48,7 @@ export class CreateContactPage {
             content: "Creating contact..."
         });
         loader.present();
-        this.apiProvider.createContact(this.getNewContactObj()).subscribe(newC => {
+        this.contactService.createContact(this.getNewContactObj()).subscribe(newC => {
             loader.dismiss();
             this.createContactForm.reset()
             this.navCtrl.setRoot(TabPage, newC);
@@ -64,7 +64,7 @@ export class CreateContactPage {
             content: "Updating contact..."
         });
         loader.present();
-        this.apiProvider.updateContact(this.getNewContactObj()).subscribe(newC => {
+        this.contactService.updateContact(this.getNewContactObj()).subscribe(newC => {
             loader.dismiss();
             this.createContactForm.reset()
             this.navCtrl.getPrevious().data.contact = newC;

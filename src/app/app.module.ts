@@ -7,16 +7,18 @@ import { IonicStorageModule } from '@ionic/storage';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { AuthService } from '../providers/my-app-api/auth-service';
+import { ContactService } from '../providers/my-app-api/contact-service';
 import { LoginPage } from '../pages/login/login';
 import { CustomNamePage } from '../pages/custom-name/custom-name';
 import { ContactDetailPage } from '../pages/contact-detail/contact-detail';
 import { TabPageModule } from '../pages/tab/tab.module';
-import { MyAppApiProvider } from '../providers/my-app-api/my-app-api';
 import { LogoutPage } from '../pages/logout/logout';
 import { CreateContactModule } from '../pages/create-contact/create-contact.module';
+
+
 
 
 @NgModule({
@@ -50,7 +52,8 @@ import { CreateContactModule } from '../pages/create-contact/create-contact.modu
         StatusBar,
         SplashScreen,
         { provide: ErrorHandler, useClass: IonicErrorHandler },
-        MyAppApiProvider
+        AuthService,
+        ContactService
     ]
 })
 export class AppModule { }

@@ -3,9 +3,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { NavController, NavParams, LoadingController, Events } from 'ionic-angular';
 
 import { AuthenticationCredentials, AuthenticatedCredentials } from '../../helper/authentication';
-import { MyAppApiProvider } from '../../providers/my-app-api/my-app-api';
 import { HomePage } from '../home/home';
 import { Constant } from '../../helper/constant';
+import { AuthService } from '../../providers/my-app-api/auth-service';
 
 @Component({
     selector: 'page-login',
@@ -21,7 +21,7 @@ export class LoginPage {
         public navParams: NavParams,
         public events: Events,
         public loadingController: LoadingController,
-        private apiProvider: MyAppApiProvider) {
+        private authService: AuthService) {
         this.authenticationCredential = new AuthenticationCredentials();
     }
 
@@ -35,8 +35,8 @@ export class LoginPage {
             content: "Logging in..."
         });
         loader.present();
-        this.apiProvider.login(this.authenticationCredential).subscribe(authenticatedCredentials => {
-            this.apiProvider.setSession(authenticatedCredentials).then((result: any)=> {
+        this.authService.login(this.authenticationCredential).subscribe(authenticatedCredentials => {
+            this.authService.setSession(authenticatedCredentials).then((result: any)=> {
                 this.events.publish(Constant.USER_EVENT);
                 loader.dismiss();
                 this.navCtrl.setRoot(HomePage);

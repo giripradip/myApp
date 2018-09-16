@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams, LoadingController, Events } from '
 import { HttpErrorResponse } from '@angular/common/http';
 import * as _ from "lodash";
 
-import { MyAppApiProvider } from '../../providers/my-app-api/my-app-api';
+import { ContactService } from '../../providers/my-app-api/contact-service';
 import { Contact } from '../../helper/contact';
 import { User } from '../../helper/user';
 import { ContactDetailPage } from '../contact-detail/contact-detail';
@@ -22,14 +22,14 @@ export class ContactPage {
     public contacts: User[] = [];
     public queryText: string;
     public newContact: NewContact;
-    
+
 
     constructor(
         public navCtrl: NavController,
         public navParams: NavParams,
         public events: Events,
         public loadingController: LoadingController,
-        private apiProvider: MyAppApiProvider) {
+        private contactService: ContactService) {
         this.newContact = this.navParams.data;
     }
 
@@ -52,7 +52,7 @@ export class ContactPage {
             content: "Getting contacts..."
         });
         loader.present();
-        this.apiProvider.getContacts(10, 1).subscribe(contact => {
+        this.contactService.getContacts(10, 1).subscribe(contact => {
             this.contact = contact;
             this.contacts = this.contact.data;
             if (this.newContact && !_.isEmpty(this.newContact)) {

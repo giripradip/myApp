@@ -3,10 +3,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { NavController, NavParams, LoadingController } from 'ionic-angular';
 
 import { TabPage } from '../tab/tab';
-import { MyAppApiProvider } from '../../providers/my-app-api/my-app-api';
+import { AuthService } from '../../providers/my-app-api/auth-service';
+import { ContactService } from '../../providers/my-app-api/contact-service';
 import { User } from '../../helper/user';
 import { LoginPage } from '../login/login';
 import { Constant } from '../../helper/constant';
+
 
 @Component({
     selector: 'page-home',
@@ -22,10 +24,11 @@ export class HomePage {
         public navCtrl: NavController,
         public navParams: NavParams,
         public loadingController: LoadingController,
-        private apiProvider: MyAppApiProvider) { }
+        public authService: AuthService,
+        private contactService: ContactService) { }
 
     ionViewDidLoad() {
-        this.apiProvider.isAuthenticated().then(
+        this.authService.isAuthenticated().then(
             (val: string | null) => {
                 if (val !== null) {
                     this.getUser();
@@ -34,7 +37,7 @@ export class HomePage {
     }
 
     ionViewCanEnter() {
-        this.apiProvider.isAuthenticated().then(
+        this.authService.isAuthenticated().then(
             (val: string | null) => {
                 if (val !== null) {
                     this.isLoggedIn = true;
@@ -65,7 +68,7 @@ export class HomePage {
             content: "Loading..."
         });
         loader.present();
-        this.apiProvider.getUser().subscribe(user => {
+        this.contactService.getUser().subscribe(user => {
             this.user = user;
             loader.dismiss();
         },

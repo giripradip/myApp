@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, Events } from 'ionic-angular';
 
-import { MyAppApiProvider } from '../../providers/my-app-api/my-app-api';
 import { LoginPage } from '../login/login';
 import { Constant } from '../../helper/constant';
+import { AuthService } from '../../providers/my-app-api/auth-service';
 
 @Component({
     selector: 'page-logout',
@@ -14,7 +14,7 @@ export class LogoutPage {
     constructor(
         public navCtrl: NavController,
         public navParams: NavParams,
-        private apiProvider: MyAppApiProvider,
+        private authService: AuthService,
         public events: Events
     ) { }
 
@@ -23,7 +23,7 @@ export class LogoutPage {
     }
 
     logout() {
-        this.apiProvider.logout();
+        this.authService.logout();
         this.navCtrl.setRoot(LoginPage);
         this.events.publish(Constant.USER_EVENT);
     }

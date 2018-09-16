@@ -3,7 +3,7 @@ import { Events } from 'ionic-angular';
 import { NavController, NavParams, LoadingController } from 'ionic-angular'; import { HttpErrorResponse } from '@angular/common/http';
 
 import { User } from '../../helper/user';
-import { MyAppApiProvider } from '../../providers/my-app-api/my-app-api';
+import { ContactService } from '../../providers/my-app-api/contact-service';
 import { CreateContactPage } from '../create-contact/create-contact';
 import { Constant } from '../../helper/constant';
 
@@ -21,7 +21,7 @@ export class ContactDetailPage {
         public navParams: NavParams,
         public events: Events,
         public loadingController: LoadingController,
-        private apiProvider: MyAppApiProvider) {
+        private contactService: ContactService) {
         this.contact = this.navParams.data;
     }
 
@@ -43,7 +43,7 @@ export class ContactDetailPage {
             content: "Deleting contact..."
         });
         loader.present();
-        this.apiProvider.deleteContact(contact.id).subscribe(response => {
+        this.contactService.deleteContact(contact.id).subscribe(response => {
             loader.dismiss();
             this.events.publish(Constant.CONTACT, contact);
             this.navCtrl.pop();
