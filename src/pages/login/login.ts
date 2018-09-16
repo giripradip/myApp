@@ -26,7 +26,7 @@ export class LoginPage {
     }
 
     ionViewDidLoad() {
-        //this.apiProvider.logout();
+
     }
 
     // method to call when user clicks login buttom
@@ -37,9 +37,9 @@ export class LoginPage {
         loader.present();
         this.authService.login(this.authenticationCredential).subscribe(authenticatedCredentials => {
             this.authService.setSession(authenticatedCredentials).then((result: any)=> {
-                this.events.publish(Constant.USER_EVENT);
+                this.events.publish(Constant.USER_EVENT); // creates event user is logged in to change menu
                 loader.dismiss();
-                this.navCtrl.setRoot(HomePage);
+                this.navCtrl.setRoot(HomePage); // set root page as home page
             });
         },
             (err: HttpErrorResponse) => {

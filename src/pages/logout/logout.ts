@@ -22,10 +22,11 @@ export class LogoutPage {
         console.log('ionViewDidLoad LogoutPage');
     }
 
+    // function to handle user logout event
     logout() {
-        this.authService.logout();
-        this.navCtrl.setRoot(LoginPage);
-        this.events.publish(Constant.USER_EVENT);
+        this.authService.logout(); // logout the user
+        this.navCtrl.setRoot(LoginPage);// redirects to login page
+        this.events.publish(Constant.USER_EVENT); // creates event for menu update
     }
 
 }

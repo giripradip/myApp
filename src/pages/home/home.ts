@@ -28,6 +28,7 @@ export class HomePage {
         private contactService: ContactService) { }
 
     ionViewDidLoad() {
+        // gets the details of a user if user is logged in
         this.authService.isAuthenticated().then(
             (val: string | null) => {
                 if (val !== null) {
@@ -37,6 +38,7 @@ export class HomePage {
     }
 
     ionViewCanEnter() {
+        // authentication guards to check if user is logged in or not and changes the view accordingly
         this.authService.isAuthenticated().then(
             (val: string | null) => {
                 if (val !== null) {
@@ -49,20 +51,24 @@ export class HomePage {
     }
 
     ionViewWillEnter() {
+        //gets nick name and print it on home page
         let nickName = this.navParams.get(Constant.NICKNAME);
         if (nickName) {
             this.nickName = nickName;
         }
     }
 
+    // function to go to login page
     goToLoginPage() {
         this.navCtrl.setRoot(LoginPage);
     }
 
+    //function to go to list of contacts page
     goToContactsPage() {
         this.navCtrl.setRoot(TabPage);
     }
 
+    // function to get details of a user
     getUser() {
         let loader = this.loadingController.create({
             content: "Loading..."

@@ -26,7 +26,7 @@ export class CreateContactPage {
         public loadingController: LoadingController,
         private contactService: ContactService,
         private formBuilder: FormBuilder) {
-        this.contact = this.navParams.get(Constant.CONTACT);
+        this.contact = this.navParams.get(Constant.CONTACT); // receives contact object if passed from called page
         this.initializeCreateContactForm();
     }
 
@@ -34,14 +34,16 @@ export class CreateContactPage {
 
     }
 
+    // function to handle user button click events either for create or update
     createContact() {
         if (!this.contact) {
-            this.createNewContact();
+            this.createNewContact(); // creates contact
             return;
         }
-        this.updateContact();
+        this.updateContact(); // update contact
     }
 
+    // methods to call api for contact creation handling
     private createNewContact() {
 
         let loader = this.loadingController.create({
@@ -51,7 +53,7 @@ export class CreateContactPage {
         this.contactService.createContact(this.getNewContactObj()).subscribe(newC => {
             loader.dismiss();
             this.createContactForm.reset()
-            this.navCtrl.setRoot(TabPage, newC);
+            this.navCtrl.setRoot(TabPage, newC); // redirects to contact list page 
         },
             (err: HttpErrorResponse) => {
                 console.log(err);
@@ -59,6 +61,7 @@ export class CreateContactPage {
             });
     }
 
+    // function to handle update contact
     private updateContact() {
         let loader = this.loadingController.create({
             content: "Updating contact..."
@@ -76,6 +79,7 @@ export class CreateContactPage {
             });
     }
 
+    // creates new Create contact object after form form data
     private getNewContactObj(): CreateContact {
         let newContact = new CreateContact();
         newContact.name = this.createContactForm.value.firstName + " " + this.createContactForm.value.lastName;
@@ -83,6 +87,7 @@ export class CreateContactPage {
         return newContact;
     }
 
+    // methods to intialize either create or update contact form
     private initializeCreateContactForm() {
         if (!this.contact) {
             this.btnLabel = "Create Contact";

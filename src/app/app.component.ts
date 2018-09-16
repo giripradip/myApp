@@ -49,11 +49,12 @@ export class MyApp {
         this.nav.setRoot(page.component);
     }
 
+    // methods to set the menu according to user is logged in or not
     private setPage() {
         this.pages = [{ title: 'Home', component: HomePage }];
         this.authService.isAuthenticated().then(
             (val: string | null) => {
-                if (val !== null) {
+                if (val !== null) { // user is logged in
                     this.pages = this.pages.concat([
                         { title: 'All Contacts', component: TabPage },
                         { title: 'Create Nick Name', component: CustomNamePage },
@@ -61,7 +62,7 @@ export class MyApp {
                         { title: 'Logout', component: LogoutPage }
                     ]);
                     return;
-                }
+                }// user is not logged in
                 this.pages = this.pages.concat([
                     { title: 'Login', component: LoginPage },
                 ]);

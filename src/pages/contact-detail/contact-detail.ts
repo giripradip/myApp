@@ -30,6 +30,7 @@ export class ContactDetailPage {
     }
 
     ionViewWillEnter() {
+        //received params passed from update contact page  and updates the name
         let contact = this.navParams.get(Constant.CONTACT);
         if (contact) {
             let name = contact.name.split(" ");
@@ -38,6 +39,7 @@ export class ContactDetailPage {
         }
     }
 
+    // function to delete the contact
     deleteContact(event: any, contact: User) {
         let loader = this.loadingController.create({
             content: "Deleting contact..."
@@ -45,7 +47,8 @@ export class ContactDetailPage {
         loader.present();
         this.contactService.deleteContact(contact.id).subscribe(response => {
             loader.dismiss();
-            this.events.publish(Constant.CONTACT, contact);
+            // create events when contact is deleted to update the contact list
+            this.events.publish(Constant.CONTACT, contact); 
             this.navCtrl.pop();
         },
             (err: HttpErrorResponse) => {
@@ -54,6 +57,7 @@ export class ContactDetailPage {
             });
     }
 
+    // redirects to update the contact in contact create page
     updateContact(event: any, contact: User) {
         let uContact = { contact: contact };
         this.navCtrl.push(CreateContactPage, uContact);

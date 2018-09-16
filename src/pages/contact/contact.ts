@@ -30,7 +30,7 @@ export class ContactPage {
         public events: Events,
         public loadingController: LoadingController,
         private contactService: ContactService) {
-        this.newContact = this.navParams.data;
+        this.newContact = this.navParams.data; // receiving newContact object from nav params
     }
 
     ionViewDidLoad() {
@@ -38,6 +38,7 @@ export class ContactPage {
     }
 
     ionViewWillEnter() {
+        // listening to events and remove contact from the array based on received objects
         this.events.subscribe(Constant.CONTACT, (contact) => {
             if (contact) {
                 this.contacts = _.remove(this.contacts, function (e) {
@@ -47,14 +48,17 @@ export class ContactPage {
         });
     }
 
+    // functio to call api and loads contact on the page
     getContacts() {
         let loader = this.loadingController.create({
             content: "Getting contacts..."
         });
-        loader.present();
+        loader.present(); // showing loader
+        //api call to get the list of contacts and page info
         this.contactService.getContacts(10, 1).subscribe(contact => {
             this.contact = contact;
             this.contacts = this.contact.data;
+            // if new contact is updated updates on new contacts list
             if (this.newContact && !_.isEmpty(this.newContact)) {
                 let newUser = new User();
                 newUser.first_name = this.newContact.name;
@@ -71,6 +75,7 @@ export class ContactPage {
             });
     }
 
+    //function to go to Contact Details page
     contactSelected(event: any, contact: User) {
         this.navCtrl.parent.parent.push(ContactDetailPage, contact);
         //this.navCtrl.push(ContactDetailPage, contact);

@@ -26,13 +26,14 @@ export class AuthService {
         return this.storage.get(Constant.TOKEN);
     }
 
-    // function to save user information to the browser
+    // function to save user information to the local storage
     setSession(authResult): Promise<any> {
         this.storage.clear();
         return this.storage.set(Constant.TOKEN, authResult.token);
     }
 
+    // function to logout
     logout() {
-        this.storage.clear();
+        this.storage.clear(); // clears all the saved items from local storage
     }
 }
